@@ -1,0 +1,355 @@
+{
+	"info": {
+		"_postman_id": "1b29fc02-f607-4b57-aea6-d302bf53104d",
+		"name": "TrelloBoards",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20983390"
+	},
+	"item": [
+		{
+			"name": "Boards",
+			"item": [
+				{
+					"name": "Create Board",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// test case #1:\r",
+									"pm.test(\"TC1: Check Board is Opened\",function(){\r",
+									"    pm.expect(pm.response.json().closed).to.be,false;\r",
+									"})\r",
+									"// test case #2:\r",
+									"pm.test(\"TC2: Check Board Can Be Public\",function(){\r",
+									"    pm.expect(pm.response.json().prefs.canBePublic).to.be.true;\r",
+									"})\r",
+									"// test case #3:\r",
+									"pm.test(\"TC3: Check Board's Permission Level is Private\",function(){\r",
+									"    pm.expect(pm.response.json().prefs.permissionLevel).to.equal(\"private\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{trelloBaseURL}}/1/boards/?name=Board 3&key={{trelloKey}}&token={{trelloToken}}&prefs_background=red",
+							"host": [
+								"{{trelloBaseURL}}"
+							],
+							"path": [
+								"1",
+								"boards",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Board 3"
+								},
+								{
+									"key": "key",
+									"value": "{{trelloKey}}"
+								},
+								{
+									"key": "token",
+									"value": "{{trelloToken}}"
+								},
+								{
+									"key": "prefs_background",
+									"value": "red"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Boards",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// test case #1:\r",
+									"pm.test(\"TC4: Check Number of Boards is Larger Than 1\",function(){\r",
+									"    pm.expect(pm.response.json().boards.length>1);\r",
+									"})\r",
+									"// getting the first board id\r",
+									"pm.environment.set(\"firstBoardID\", pm.response.json().boards[0].id);\r",
+									"// getting the last board id\r",
+									"var lastBoardIndex = pm.response.json().boards.length-1;\r",
+									"pm.environment.set(\"lastBoardID\", pm.response.json().boards[lastBoardIndex].id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{trelloBaseURL}}/1/members/me?boards=open&key={{trelloKey}}&token={{trelloToken}}",
+							"host": [
+								"{{trelloBaseURL}}"
+							],
+							"path": [
+								"1",
+								"members",
+								"me"
+							],
+							"query": [
+								{
+									"key": "boards",
+									"value": "open"
+								},
+								{
+									"key": "key",
+									"value": "{{trelloKey}}"
+								},
+								{
+									"key": "token",
+									"value": "{{trelloToken}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Board",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// test case #1:\r",
+									"pm.test(\"TC5: Check Response Code is 200\",function(){\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"pm.test(\"TC6: Check Response Body Include Meaningful MSG\",function(){\r",
+									"    pm.expect(pm.response.json()._value).to.include(\"removed successfully\")\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{trelloBaseURL}}/1/boards/{{lastBoardID}}?key={{trelloKey}}&token={{trelloToken}}",
+							"host": [
+								"{{trelloBaseURL}}"
+							],
+							"path": [
+								"1",
+								"boards",
+								"{{lastBoardID}}"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{trelloKey}}"
+								},
+								{
+									"key": "token",
+									"value": "{{trelloToken}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Lists",
+			"item": [
+				{
+					"name": "Create List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// test case #1:\r",
+									"pm.test(\"TC7: Check Response Body Include Id, Name, idBoard\",function(){\r",
+									"    pm.expect(pm.response.json().id).to.exist;\r",
+									"    pm.expect(pm.response.json().name).to.exist;\r",
+									"    pm.expect(pm.response.json().idBoard).to.exist;\r",
+									"})\r",
+									"// test case #2:\r",
+									"pm.test(\"TC8: Check Board is Opened\",function(){\r",
+									"    pm.expect(pm.response.json().closed).to.be,false;\r",
+									"})\r",
+									"// test case #3:\r",
+									"pm.test(\"TC9: Check List Has No Limits\",function(){\r",
+									"    pm.expect(pm.response.json().limits.length=0);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{trelloBaseURL}}/1/lists?name=new-list&idBoard={{firstBoardID}}&key={{trelloKey}}&token={{trelloToken}}",
+							"host": [
+								"{{trelloBaseURL}}"
+							],
+							"path": [
+								"1",
+								"lists"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "new-list"
+								},
+								{
+									"key": "idBoard",
+									"value": "{{firstBoardID}}"
+								},
+								{
+									"key": "key",
+									"value": "{{trelloKey}}"
+								},
+								{
+									"key": "token",
+									"value": "{{trelloToken}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Lists On a Board",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// test case #1:\r",
+									"pm.test(\"TC10: Check Board Has 3 Or More Lists\",function(){\r",
+									"    pm.expect(pm.response.json().length>=3)\r",
+									"})\r",
+									"// test case #2:\r",
+									"var listsCount = pm.response.json().length;\r",
+									"pm.test(\"TC11: Check Response Body Includes ID, name and idBoard\",function(){\r",
+									"    for(let i=0; i<listsCount; i++){\r",
+									"        pm.expect(pm.response.json()[i].id).to.exist;\r",
+									"        pm.expect(pm.response.json()[i].name).to.exist;\r",
+									"        pm.expect(pm.response.json()[i].idBoard).to.exist;\r",
+									"    }\r",
+									"})\r",
+									"// getting first list ID\r",
+									"pm.environment.set(\"firstListID\", pm.response.json()[0].id);\r",
+									"// getting last board ID\r",
+									"pm.environment.set(\"lastListID\", pm.response.json()[listsCount-1].id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.trello.com/1/boards/{{firstBoardID}}/lists?key={{trelloKey}}&token={{trelloToken}}",
+							"protocol": "https",
+							"host": [
+								"api",
+								"trello",
+								"com"
+							],
+							"path": [
+								"1",
+								"boards",
+								"{{firstBoardID}}",
+								"lists"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{trelloKey}}"
+								},
+								{
+									"key": "token",
+									"value": "{{trelloToken}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Archive List",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// test case #1\r",
+									"pm.test(\"TC12: Check Response Code is 200\",function(){\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"})\r",
+									"// test case #2:\r",
+									"pm.test(\"TC13: Check List is Closed\",function(){\r",
+									"    pm.expect(pm.response.json().closed).to.be,true;\r",
+									"})\r",
+									"// test case #3:\r",
+									"pm.test(\"TC14: Check Response Header Include Set-Cookie\",function(){\r",
+									"    pm.response.to.have.header(\"Set-Cookie\");\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{trelloBaseURL}}/1/lists/{{lastListID}}/closed?key={{trelloKey}}&token={{trelloToken}}&value=true",
+							"host": [
+								"{{trelloBaseURL}}"
+							],
+							"path": [
+								"1",
+								"lists",
+								"{{lastListID}}",
+								"closed"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{trelloKey}}"
+								},
+								{
+									"key": "token",
+									"value": "{{trelloToken}}"
+								},
+								{
+									"key": "value",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

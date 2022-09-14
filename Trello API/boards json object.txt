@@ -1,0 +1,23 @@
+"boards": [
+        {
+            "id": "6320d6fecdb385004d126401",
+            "name": "Board 1",
+            "closed": false,
+            "idOrganization": "62bf4ccc3ace3714e218c0af",
+            "pinned": false
+        },
+        {
+            "id": "6320d79733b1590030eb4162",
+            "name": "Board 2",
+            "closed": false,
+            "idOrganization": "62bf4ccc3ace3714e218c0af",
+            "pinned": false
+        },
+        {
+            "id": "62bf4d364e4ee10a6b790d56",
+            "name": "Heathcare Front-end Development Project",
+            "closed": false,
+            "idOrganization": "62bf4ccc3ace3714e218c0af",
+            "pinned": false
+        }
+    ]

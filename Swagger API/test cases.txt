@@ -1,0 +1,97 @@
+Test Case #1:
+API: GET /api/v1/Authors
+Test Case: Check Response Code is 200
+Expected Result: 200
+Actual Result: 200
+Status: Pass
+
+Test Case #2:
+API: GET /api/v1/Authors
+Test Case: Check Response Status is OK
+Expected Result: OK
+Actual Result: OK
+Status: Pass
+
+Test Case #3:
+API: GET /api/v1/Authors
+Test Case: Check Object in Body Include ID, BookID, FirstName and LastName
+Expected Result: true
+Actual Result: true
+Status: Pass
+
+Test Case #4:
+API: POST /api/v1/Authors
+Test Case : Check Response Code is 201
+Expected Result: 201
+Actual Result: 200
+Status: fail
+
+Test Case #5:
+API: POST /api/v1/Authors
+Test Case : Check Response Status is Created
+Expected Result: Created
+Actual Result: Ok
+Status: fail
+
+Test Case #6:
+API: POST /api/v1/Authors
+Test Case: Check firstname and lastname are included in the request body
+Expected Result: true
+Actual Result: true
+Status: Pass
+
+Test Case #7:
+API: POST /api/v1/Authors
+Test Case: Check response code is 400 when firstName and lastName are not entered
+Expected Result: 400
+Actual Result: 400
+Status: Pass
+
+Test Case #8:
+API: POST /api/v1/Authors
+Test Case: Check response status is Bad Request when firstName and lastName are not entered
+Expected Result: Bad Request
+Actual Result: Bad Request
+Status: Pass
+
+Test Case #9:
+API: GET /api/v1/Authors/authors/books/60
+Test Case: Check response body objects have the requested book ID
+Expected Result: true
+Actual Result: true
+Status: Pass
+
+Test Case #10:
+API: GET /api/v1/Authors/97
+Test Case: Check response body include the requested ID
+Expected Result: true
+Actual Result: true
+Status: Pass
+
+Test Case #11:
+API: GET /api/v1/Authors/97
+Test Case: Check first name and last name include the id
+Expected Result: true
+Actual Result: true
+Status: Pass
+
+Test Case #12:
+API: PUT /api/v1/Authors/0
+Test Case: Check first name is updated
+Expected Result: true
+Actual Result: true
+Status: Pass
+
+Test Case #13:
+API: PUT /api/v1/Authors/0
+Test Case: Check last name is updated
+Expected Result: true
+Actual Result: true
+Status: Pass
+
+Test Case #14:
+API: DELETE /api/v1/Authors/70
+Test Case: Check Response Code is 200
+Expected Result: 200
+Actual Result: 200
+Status: Pass
