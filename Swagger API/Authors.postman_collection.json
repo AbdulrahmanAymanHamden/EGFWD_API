@@ -43,12 +43,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://fakerestapi.azurewebsites.net/api/v1/Authors",
-					"protocol": "http",
+					"raw": "{{baseURL}}/api/v1/Authors",
 					"host": [
-						"fakerestapi",
-						"azurewebsites",
-						"net"
+						"{{baseURL}}"
 					],
 					"path": [
 						"api",
@@ -111,12 +108,9 @@
 					}
 				},
 				"url": {
-					"raw": "http://fakerestapi.azurewebsites.net/api/v1/Authors",
-					"protocol": "http",
+					"raw": "{{baseURL}}/api/v1/Authors",
 					"host": [
-						"fakerestapi",
-						"azurewebsites",
-						"net"
+						"{{baseURL}}"
 					],
 					"path": [
 						"api",
@@ -128,7 +122,7 @@
 			"response": []
 		},
 		{
-			"name": "get author by bookID",
+			"name": "get created author by bookID",
 			"event": [
 				{
 					"listen": "test",
@@ -138,7 +132,8 @@
 							"var num = pm.response.json().length;\r",
 							"for(let i = 0; i < num; i++){\r",
 							"    pm.test(\"TC9: Check response body objects have the requested book ID\",function(){\r",
-							"        pm.expect(pm.response.json()[i].idBook).to.equal(60);\r",
+							"        pm.expect(pm.response.json()[i].idBook).to.equal(pm.collectionVariables.get(\"bookID\"));\r",
+							"\r",
 							"    })\r",
 							"}"
 						],
@@ -150,12 +145,9 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://fakerestapi.azurewebsites.net/api/v1/Authors/authors/books/60",
-					"protocol": "http",
+					"raw": "{{baseURL}}/api/v1/Authors/authors/books/{{bookID}}",
 					"host": [
-						"fakerestapi",
-						"azurewebsites",
-						"net"
+						"{{baseURL}}"
 					],
 					"path": [
 						"api",
@@ -163,49 +155,7 @@
 						"Authors",
 						"authors",
 						"books",
-						"60"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "get author by ID",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"// test case 1:\r",
-							"pm.test(\"TC10: Check response body include the requested id\",function(){\r",
-							"    pm.expect(pm.response.json().id).to.equal(97)\r",
-							"})\r",
-							"// test case 2:\r",
-							"pm.test(\"TC11: Check first name and last name include the id\",function(){\r",
-							"    pm.expect(pm.response.json().firstName).to.include(97)\r",
-							"    pm.expect(pm.response.json().lastName).to.include(97)\r",
-							"})"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://fakerestapi.azurewebsites.net/api/v1/Authors/97",
-					"protocol": "http",
-					"host": [
-						"fakerestapi",
-						"azurewebsites",
-						"net"
-					],
-					"path": [
-						"api",
-						"v1",
-						"Authors",
-						"97"
+						"{{bookID}}"
 					]
 				}
 			},
@@ -227,7 +177,7 @@
 							"pm.test(\"TC13: Check last name is updated\",function(){\r",
 							"    pm.expect(pm.response.json().lastName).to.equal(jsonReq.lastName);\r",
 							"})\r",
-							""
+							"console.log(pm.response.json())"
 						],
 						"type": "text/javascript"
 					}
@@ -238,7 +188,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"firstName\": \"asmaa\",\r\n  \"lastName\": \"abdo\"\r\n}",
+					"raw": "{\r\n  \"id\": {{updatedID}},\r\n  \"idBook\": {{bookID}},\r\n  \"firstName\": \"asmaa\",\r\n  \"lastName\": \"abdo\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -246,25 +196,63 @@
 					}
 				},
 				"url": {
-					"raw": "http://fakerestapi.azurewebsites.net/api/v1/Authors/0",
-					"protocol": "http",
+					"raw": "{{baseURL}}/api/v1/Authors/5",
 					"host": [
-						"fakerestapi",
-						"azurewebsites",
-						"net"
+						"{{baseURL}}"
 					],
 					"path": [
 						"api",
 						"v1",
 						"Authors",
-						"0"
+						"5"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "delete author",
+			"name": "get updated author by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// test case 1:\r",
+							"pm.test(\"TC10: Check response body include the requested id\",function(){\r",
+							"    pm.expect(pm.response.json().id).to.equal(parseInt(pm.collectionVariables.get(\"updatedID\"))\r",
+							")\r",
+							"})\r",
+							"// test case 2:\r",
+							"pm.test(\"TC11: Check first name and last name include the id\",function(){\r",
+							"    pm.expect(pm.response.json().firstName).to.include(pm.collectionVariables.get(\"updatedID\"));\r",
+							"    pm.expect(pm.response.json().lastName).to.include(pm.collectionVariables.get(\"updatedID\"));\r",
+							"})\r",
+							"console.log(pm.response.json())"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/v1/Authors/{{updatedID}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"Authors",
+						"{{updatedID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete created author",
 			"event": [
 				{
 					"listen": "test",
@@ -284,18 +272,15 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://fakerestapi.azurewebsites.net/api/v1/Authors/70",
-					"protocol": "http",
+					"raw": "{{baseURL}}/api/v1/Authors/7",
 					"host": [
-						"fakerestapi",
-						"azurewebsites",
-						"net"
+						"{{baseURL}}"
 					],
 					"path": [
 						"api",
 						"v1",
 						"Authors",
-						"70"
+						"7"
 					]
 				}
 			},
@@ -346,6 +331,11 @@
 		{
 			"key": "lastName",
 			"value": "\"Ayman\"",
+			"type": "string"
+		},
+		{
+			"key": "updatedID",
+			"value": "500",
 			"type": "string"
 		}
 	]

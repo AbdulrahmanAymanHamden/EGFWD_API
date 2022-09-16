@@ -55,36 +55,36 @@ Actual Result: Bad Request
 Status: Pass
 
 Test Case #9:
-API: GET /api/v1/Authors/authors/books/60
+API: GET /api/v1/Authors/authors/books/{{bookID}}
 Test Case: Check response body objects have the requested book ID
 Expected Result: true
 Actual Result: true
 Status: Pass
 
 Test Case #10:
-API: GET /api/v1/Authors/97
-Test Case: Check response body include the requested ID
-Expected Result: true
-Actual Result: true
-Status: Pass
-
-Test Case #11:
-API: GET /api/v1/Authors/97
-Test Case: Check first name and last name include the id
-Expected Result: true
-Actual Result: true
-Status: Pass
-
-Test Case #12:
-API: PUT /api/v1/Authors/0
+API: PUT /api/v1/Authors/5
 Test Case: Check first name is updated
 Expected Result: true
 Actual Result: true
 Status: Pass
 
-Test Case #13:
-API: PUT /api/v1/Authors/0
+Test Case #11:
+API: PUT /api/v1/Authors/5
 Test Case: Check last name is updated
+Expected Result: true
+Actual Result: true
+Status: Pass
+
+Test Case #12:
+API: GET /api/v1/Authors/{{updatedID}}
+Test Case: Check response body include the requested ID
+Expected Result: true
+Actual Result: true
+Status: Pass
+
+Test Case #13:
+API: GET /api/v1/Authors/{{updatedID}}
+Test Case: Check first name and last name include the id
 Expected Result: true
 Actual Result: true
 Status: Pass

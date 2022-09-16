@@ -1,0 +1,33 @@
+{
+	"id": "e0e3a7bb-8bde-4fff-87e5-b1cb98526412",
+	"values": [
+		{
+			"key": "baseURL",
+			"value": "http://fakerestapi.azurewebsites.net",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "trelloKey",
+			"value": "75763d329b427f83fa47f09569772883",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "trelloToken",
+			"value": "b14778dbea304aaeb8e5808efcdaf491a1444f09217572aca52a5a886775370c",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "trelloBaseURL",
+			"value": "https://api.trello.com",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"name": "Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2022-09-16T22:08:18.201Z",
+	"_postman_exported_using": "Postman/9.31.7"
+}
